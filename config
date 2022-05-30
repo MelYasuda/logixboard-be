@@ -1,0 +1,12 @@
+require('dotenv').config();
+
+const config = {
+  db: {
+    host: "localhost",
+    user: "root",
+    password: process.env.DB_PASSWORD,
+    database: "test",
+    timezone: '+00:00',
+  },
+};
+module.exports = config;
