@@ -188,7 +188,7 @@
       LEFT JOIN organizations ON shipments_organizations.organization_id = organizations.id
       LEFT JOIN transport_packs ON shipments.id = transport_packs.shipment_id
       WHERE shipments.ref_id LIKE '${id}'`
-      )
+      ) // these are all left joins because not all shipments have organizations and/or transport packs, in that case they will not be queried with inner join
 
       if (shipment.length) { // shipment exists
         let organizations = new Array<any>();
