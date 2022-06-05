@@ -1,8 +1,39 @@
+GET http://localhost:3000/shipments/S00001175
+
+###
+GET http://localhost:3000/shipments/S00001009
+
+###
+GET http://localhost:3000/shipments/S00001071
+###
+GET http://localhost:3000/shipments/S00001142
+
+###
+GET http://localhost:3000/shipments/S00001167
+
+###
 GET http://localhost:3000/shipments/S00001197
 
 ###
 
 GET http://localhost:3000/organizations/34f195b5-2aa1-4914-85ab-f8849f9b541a
+
+###
+
+GET http://localhost:3000/organizations/99f2535b-3f90-4758-8549-5b13c43a8504
+
+###
+
+GET http://localhost:3000/organizations/381f5cc5-dfe4-4f58-98ad-116666855ca3
+
 ###
 
 GET http://localhost:3000/transport-packs/total-weight?unit=ounces
+
+###
+
+GET http://localhost:3000/transport-packs/total-weight?unit=pounds
+
+###
+
+GET http://localhost:3000/transport-packs/total-weight?unit=kilograms

@@ -134,12 +134,6 @@ export const messages = [
             "weight": "3",
             "unit": "KILOGRAMS"
           }
-        },
-        {
-          "totalWeight": {
-            "weight": "20",
-            "unit": "OUNCES"
-          }
         }
       ]
     }

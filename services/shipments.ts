@@ -180,15 +180,12 @@
         ref_id as shipment_ref_id, 
         estimated_time_arrival,
         shipments.id as shipment_id, 
-        code as org_code, 
-        weight, 
-        unit
+        code as org_code 
       FROM shipments 
       LEFT JOIN shipments_organizations ON shipments.id = shipments_organizations.shipment_id 
       LEFT JOIN organizations ON shipments_organizations.organization_id = organizations.id
-      LEFT JOIN transport_packs ON shipments.id = transport_packs.shipment_id
       WHERE shipments.ref_id LIKE '${id}'`
-      ) // these are all left joins because not all shipments have organizations and/or transport packs, in that case they will not be queried with inner join
+      ) // these are all left joins because not all shipments have organizations in that case they will not be queried with inner join
 
       if (shipment_organiations.length) { // shipment exists
         let organizations = new Array<any>()
