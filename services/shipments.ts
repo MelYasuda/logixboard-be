@@ -173,8 +173,8 @@
  const findShipmentById = async (id: string) => {
   try {
 
-    // find shipments and associated data
-    const shipment = await dbShipments.query(
+    // find shipments and organizatio associated data
+    const shipment_organiations = await dbShipments.query(
       `SELECT 
         shipments.id as shipment_id,
         ref_id as shipment_ref_id, 
@@ -190,31 +190,42 @@
       WHERE shipments.ref_id LIKE '${id}'`
       ) // these are all left joins because not all shipments have organizations and/or transport packs, in that case they will not be queried with inner join
 
-      if (shipment.length) { // shipment exists
-        let organizations = new Array<any>();
-        if(shipment[0].org_code) {
-          for(let i=0; i < shipment.length; i++) {
-            organizations.push(shipment[i].org_code) // create org code list
+      if (shipment_organiations.length) { // shipment exists
+        let organizations = new Array<any>()
+        if(shipment_organiations[0].org_code) {
+          for(let i=0; i < shipment_organiations.length; i++) {
+            organizations.push(shipment_organiations[i].org_code) // create org code list
           }
         }
+
+      // find shipments and transport pack associated data
+    const shipment_tps = await dbShipments.query(
+      `SELECT  
+        weight, 
+        unit
+      FROM shipments 
+      LEFT JOIN transport_packs ON shipments.id = transport_packs.shipment_id
+      WHERE shipments.ref_id LIKE '${id}'`)
 
         // create transport pack list
         let nodes = new Array<any>();
-        if (shipment[0].weight && shipment[0].unit) {
-          const node = {
-            totalWeight: {
-              weight: shipment[0].weight,
-              unit: shipment[0].unit
+        if (shipment_tps[0].weight && shipment_tps[0].unit) {
+          for(let i=0; i<shipment_tps.length; i++) {
+            const node = {
+              totalWeight: {
+                weight: shipment_tps[i].weight,
+                unit: shipment_tps[i].unit
+              }
             }
+            nodes.push(node)
           }
-          nodes.push(node)
         }
 
         const resultShipment = {
-          id: shipment[0].shipment_id,
-          referenceId: shipment[0].shipment_ref_id,
+          id: shipment_organiations[0].shipment_id,
+          referenceId: shipment_organiations[0].shipment_ref_id,
           organizations: organizations,
-          estimatedTimeArrival: shipment[0].estimated_time_arrival,
+          estimatedTimeArrival: shipment_organiations[0].estimated_time_arrival,
           transportPacks: {
             nodes: nodes,
           }
