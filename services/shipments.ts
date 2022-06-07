@@ -159,8 +159,12 @@
  */
  const deleteAssocOrgsanizations = async (organizationCode: string, insertedId: string) => {
    await dbShipments.query(
-     `delete shipments_organizations FROM shipments_organizations INNER JOIN organizations ON organizations.id=shipments_organizations.organization_id INNER JOIN shipments ON shipments.id=shipments_organizations.shipment_id WHERE shipments.id LIKE ${insertedId} and organizations.code LIKE '${organizationCode}';`
-   )
+     `delete shipments_organizations
+     FROM shipments_organizations 
+     INNER JOIN organizations ON organizations.id=shipments_organizations.organization_id 
+     INNER JOIN shipments ON shipments.id=shipments_organizations.shipment_id 
+     WHERE shipments.id LIKE ${insertedId} and organizations.code LIKE '${organizationCode}';`
+   ) // delete associations based on shipment id and org code
  }
 
    /**
